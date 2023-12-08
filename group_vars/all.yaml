@@ -1,0 +1,4 @@
+---
+ansible_port: 22
+default_generation: 1
+...
