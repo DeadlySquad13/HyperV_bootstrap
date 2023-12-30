@@ -1,6 +1,6 @@
 # HyperV Bootstrap
 
-Create HyperV.
+Create HyperV machines from *existing* vhdx disks.
 
 ## Get started
 Use `./bin/dot-bootstrap` (should be executable) to install required packages for
@@ -31,55 +31,18 @@ will be ignored (and hosts too). To fix it, the easiest way is to pass it direct
 ANSIBLE_CONFIG=ansible.cfg ./bin/dot-bootstrap
 ```
 
-### Languages
-
-Languages are managed with [asdf](https://asdf-vm.com/#/).
-
-- Ruby
-- Golang
-- Nodejs
-- Python
-- Elixir
-- Terraform
-
-### System
-
-- fzf
-- git
-- tmux
-- vim
-- zsh
-
-### Services
-
-- redis
-
-### Packages
-
-- snap
-- apt
-
-## Bootstrap
-
-Firt setup installation run the dot-bootstrap command.
-
-```
-$ ./bin/dot-bootstrap
-```
-
-After that you can run any scripts defined in the `$DOTFILES_PATH/bin`
-
-```
-$ dot-bootstrap
-```
 
 ## Structure
-When the program is used in combination with another role, create a new task in
-the same folder nearby and import it. For example, `terminal-icons` is installed
-alongside `powershell`. If it is used with multiple roles, then use tags:
-`oh_my_posh` can be used in many terminals, therefore it is placed in
-a separate role and has the same tag as `powershell` role - `powershell`. So
-when you try to install any compatible shell, it will be installed alongside.
+Add configurations for VMs into `vars` directory.
+Add configurations for HyperV hosts you're going to run. Here also specify
+`vm_name` that matches one of configured VMs.
+> Only one VM per machine is supported (it's easy to fix by adding another loop
+> in playbook).
+Inside `roles/hyperv_vm/tasks` main tasks for bootstrapping are located.
 
-If the role is a direct dependency of another roles, then use meta
-`dependencies`.
+> [!CAUTION]
+> Generation 1 VMs don't have a lot of configuration options available. You may
+> need to modify playbook a lot for it to run successfully.
+
+Inside `library` folder you can find scripts for managing HyperV via Ansible.
+Most notable is `library/win_hyperv_guest.ps1` where guest is configured.
