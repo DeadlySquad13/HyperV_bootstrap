@@ -26,7 +26,7 @@
 - name: Create VMs
   win_hyperv_guest:
     name: "{{item.name}}"
-    generation: 2
+    generation: "{{item.generation}}"
     cpu: "{{item.cpu}}"
     memory: "{{item.memory}}"
     network_switch: "{{item.network_switch}}"
